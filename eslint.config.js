@@ -13,6 +13,11 @@ export default [
   ...tseslint.configs.recommended,
   ...pluginVue.configs["flat/recommended"],
   {
+    rules: {
+      "vue/multi-word-component-names": "off",
+    },
+  },
+  {
     files: ["**/*.vue"],
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
