@@ -9,21 +9,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nuxt/ui": "^3.0.0-beta.3",
+    "@nuxt/ui": "^3.0.0",
     "@types/js-cookie": "^3.0.6",
     "@unhead/vue": "2.0.0-rc.7",
     "js-cookie": "^3.0.5",
     "pinia": "^3.0.1",
-    "tailwindcss": "^4.0.12",
+    "tailwindcss": "^4.0.13",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.22.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.0.0",
@@ -31,7 +31,7 @@
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.26.0",
+    "typescript-eslint": "^8.26.1",
     "vite": "^6.2.1",
     "vue-tsc": "^2.2.8"
   }
