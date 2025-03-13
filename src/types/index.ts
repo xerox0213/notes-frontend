@@ -1,3 +1,4 @@
+import type { LoginSchema } from "../pages/LoginPage.vue";
 import type { RegistrationSchema } from "../pages/RegisterPage.vue";
 
 export interface User {
@@ -11,5 +12,11 @@ export type BasicError = { message: string };
 export type RegistrationError = BasicError & {
   errors: Partial<{
     [K in keyof RegistrationSchema]: string[];
+  }>;
+};
+
+export type LoginError = BasicError & {
+  errors: Partial<{
+    [K in keyof LoginSchema]: string[];
   }>;
 };
