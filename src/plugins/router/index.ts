@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, type RouterOptions } from "vue-router";
 import HomePage from "../../pages/HomePage.vue";
 import LoginPage from "../../pages/LoginPage.vue";
 import RegisterPage from "../../pages/RegisterPage.vue";
-import { firstVisitGuard, guestGuard } from "./guards";
+import { authGuard, firstVisitGuard, guestGuard } from "./guards";
 
 const routes: RouterOptions["routes"] = [
   {
@@ -23,6 +23,7 @@ const routes: RouterOptions["routes"] = [
     name: "home",
     path: "/",
     component: HomePage,
+    beforeEnter: authGuard,
   },
 ];
 
