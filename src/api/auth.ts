@@ -1,5 +1,6 @@
 import {
   CsrfMismatchException,
+  InvalidLoginException,
   LoginException,
   RegistrationException,
   UnauthenticatedException,
@@ -38,6 +39,8 @@ export const register = async (credentials: RegistrationSchema) => {
 
   if (!res.ok) {
     switch (res.status) {
+      case 401:
+        return Promise.reject(new InvalidLoginException(await res.json()));
       case 419:
         return Promise.reject(new CsrfMismatchException(await res.json()));
       case 422:
