@@ -4,8 +4,6 @@ import { getUser, initSession } from "../../api/auth";
 import { useUserStore } from "../../stores/userStore";
 import type { User } from "../../types";
 
-const userStore = useUserStore();
-
 let firstVisit = true;
 
 export const firstVisitGuard: NavigationGuard = async () => {
@@ -16,6 +14,7 @@ export const firstVisitGuard: NavigationGuard = async () => {
       const response = await getUser();
 
       if (response.ok) {
+        const userStore = useUserStore();
         const user = (await response.json()) as User;
         userStore.user = user;
       }
@@ -28,9 +27,11 @@ export const firstVisitGuard: NavigationGuard = async () => {
 };
 
 export const authGuard: NavigationGuard = () => {
+  const userStore = useUserStore();
   if (!userStore.user) return { name: "login" };
 };
 
 export const guestGuard: NavigationGuard = () => {
+  const userStore = useUserStore();
   if (userStore.user) return { name: "home" };
 };
