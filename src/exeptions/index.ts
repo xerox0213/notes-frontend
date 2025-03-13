@@ -20,7 +20,7 @@ export class RegistrationException {
   }
 }
 
-export class LoginException {
+export class LoginValidationException {
   reason: LoginValidationError;
 
   constructor(reason: LoginValidationError) {

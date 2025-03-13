@@ -1,7 +1,7 @@
 import {
   CsrfMismatchException,
   InvalidLoginException,
-  LoginException,
+  LoginValidationException,
   RegistrationException,
   UnauthenticatedException,
 } from "../exeptions";
@@ -59,7 +59,7 @@ export const login = async (credentials: LoginSchema) => {
       case 419:
         return Promise.reject(new CsrfMismatchException(await res.json()));
       case 422:
-        return Promise.reject(new LoginException(await res.json()));
+        return Promise.reject(new LoginValidationException(await res.json()));
     }
   }
 };
