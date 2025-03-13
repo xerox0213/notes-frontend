@@ -23,3 +23,11 @@ export class LoginException {
     this.reason = reason;
   }
 }
+
+export class UnauthenticatedException {
+  reason: BasicError;
+
+  constructor(reason: BasicError) {
+    this.reason = reason;
+  }
+}
