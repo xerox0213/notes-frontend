@@ -2,7 +2,6 @@ import type { NavigationGuard } from "vue-router";
 
 import { getUser, initSession } from "../../api/auth";
 import { useUserStore } from "../../stores/userStore";
-import type { User } from "../../types";
 
 let firstVisit = true;
 
@@ -10,18 +9,14 @@ export const firstVisitGuard: NavigationGuard = async () => {
   if (firstVisit) {
     try {
       await initSession();
-
-      const response = await getUser();
-
-      if (response.ok) {
-        const userStore = useUserStore();
-        const user = (await response.json()) as User;
-        userStore.user = user;
+      const userStore = useUserStore();
+      userStore.user = await getUser();
+    } catch (exception) {
+      if (exception instanceof TypeError) {
+        console.log("Erreur durant la requête");
       }
-
+    } finally {
       firstVisit = false;
-    } catch {
-      console.log("Première visite : problème du serveur");
     }
   }
 };
