@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type InjectionKey, provide } from "vue";
 
-  import { CsrfMismatchException } from "../exeptions";
+  import { CsrfMismatchException } from "../exceptions";
   export const key = Symbol() as InjectionKey<(exception: unknown) => void>;
 </script>
 
@@ -14,7 +14,7 @@
       toast.add({
         title: "Uh oh! Something went wrong.",
         description: "Your sessin has expired",
-        color : "error",
+        color: "error",
         icon: "i-lucide-wifi",
       });
     } else if (exception instanceof TypeError) {

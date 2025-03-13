@@ -4,7 +4,7 @@
   import { z } from "zod";
 
   import { register } from "../api/auth";
-  import { RegistrationException } from "../exeptions";
+  import { RegistrationException } from "../exceptions";
   import { key } from "../providers/ExceptionHandlerProvider.vue";
   import type { RegistrationError } from "../types";
 

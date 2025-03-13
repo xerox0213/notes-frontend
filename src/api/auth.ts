@@ -4,7 +4,7 @@ import {
   LoginValidationException,
   RegistrationException,
   UnauthenticatedException,
-} from "../exeptions";
+} from "../exceptions";
 import type { LoginSchema } from "../pages/LoginPage.vue";
 import type { RegistrationSchema } from "../pages/RegisterPage.vue";
 import type { User } from "../types";

@@ -7,7 +7,7 @@
   import {
     InvalidLoginException,
     LoginValidationException,
-  } from "../exeptions";
+  } from "../exceptions";
   import { router } from "../plugins/router";
   import { key } from "../providers/ExceptionHandlerProvider.vue";
   import { useUserStore } from "../stores/userStore";
