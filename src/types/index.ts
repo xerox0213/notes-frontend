@@ -15,7 +15,7 @@ export type RegistrationError = BasicError & {
   }>;
 };
 
-export type LoginError = BasicError & {
+export type LoginValidationError = BasicError & {
   errors: Partial<{
     [K in keyof LoginSchema]: string[];
   }>;
