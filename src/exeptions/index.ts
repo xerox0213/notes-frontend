@@ -35,3 +35,11 @@ export class UnauthenticatedException {
     this.reason = reason;
   }
 }
+
+export class InvalidLoginException {
+  reason: BasicError;
+
+  constructor(reason: BasicError) {
+    this.reason = reason;
+  }
+}
