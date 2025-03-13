@@ -1,4 +1,5 @@
-import { CsrfMismatchException, RegistrationException } from "../exeptions";
+import { CsrfMismatchException, LoginException, RegistrationException } from "../exeptions";
+import type { LoginSchema } from "../pages/LoginPage.vue";
 import type { RegistrationSchema } from "../pages/RegisterPage.vue";
 import { API_URL, options } from "../utils";
 
@@ -24,6 +25,21 @@ export const register = async (credentials: RegistrationSchema) => {
         return Promise.reject(new CsrfMismatchException(await res.json()));
       case 422:
         return Promise.reject(new RegistrationException(await res.json()));
+    }
+  }
+};
+
+export const login = async (credentials: LoginSchema) => {
+  await initSession();
+
+  const res = await fetch(`${API_URL}/api/login`, options("POST", credentials));
+
+  if (!res.ok) {
+    switch (res.status) {
+      case 419:
+        return Promise.reject(new CsrfMismatchException(await res.json()));
+      case 422:
+        return Promise.reject(new LoginException(await res.json()));
     }
   }
 };
