@@ -14,12 +14,14 @@
       toast.add({
         title: "Uh oh! Something went wrong.",
         description: "Your sessin has expired",
+        color : "error",
         icon: "i-lucide-wifi",
       });
     } else if (exception instanceof TypeError) {
       toast.add({
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
+        color: "error",
         icon: "i-lucide-wifi",
       });
     }
