@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouterOptions } from "vue-router";
 
+import HomePage from "../../pages/HomePage.vue";
 import LoginPage from "../../pages/LoginPage.vue";
 import RegisterPage from "../../pages/RegisterPage.vue";
 import { firstVisitGuard, guestGuard } from "./guards";
@@ -9,13 +10,19 @@ const routes: RouterOptions["routes"] = [
     name: "register",
     path: "/register",
     component: RegisterPage,
-    beforeEnter: [guestGuard],
+    beforeEnter: guestGuard,
   },
   {
     name: "login",
     path: "/login",
     component: LoginPage,
-    beforeEnter: [guestGuard],
+    beforeEnter: guestGuard,
+  },
+
+  {
+    name: "home",
+    path: "/",
+    component: HomePage,
   },
 ];
 
@@ -26,6 +33,6 @@ const router = createRouter({
   history,
 });
 
-router.beforeResolve(firstVisitGuard);
+router.beforeEach(firstVisitGuard);
 
 export { router };
