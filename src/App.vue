@@ -1,7 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import ExceptionHandlerProvider from "./providers/ExceptionHandlerProvider.vue";
+</script>
 
 <template>
   <UApp>
-    <UButton color="neutral">Hello</UButton>
+    <ExceptionHandlerProvider>
+      <main class="px-3 pt-20">
+        <RouterView />
+      </main>
+    </ExceptionHandlerProvider>
   </UApp>
 </template>
