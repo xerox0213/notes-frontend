@@ -1,0 +1,33 @@
+import { describe, expect, it, vi } from "vitest";
+
+import * as utils from "../utils";
+import { register } from "./auth";
+
+const options = {};
+const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
+
+
+describe("register", () => {
+  const credentials = {
+    first_name: "Damon",
+    last_name: "Salvatore",
+    email: "damon.salvatore@gmail.com",
+    password: "iloveyouelena",
+  };
+  const endpoint = `${utils.API_URL}/api/register`;
+
+  it("should register", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        status: 204,
+      }),
+    );
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    await register(credentials);
+
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+});
