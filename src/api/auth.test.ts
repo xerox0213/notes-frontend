@@ -14,6 +14,7 @@ const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
 
 afterEach(() => {
   optionsSpy.mockClear();
+  vi.unstubAllGlobals();
 });
 
 describe("register", () => {
