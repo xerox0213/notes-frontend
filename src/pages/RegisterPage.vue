@@ -3,7 +3,7 @@
   import { inject, reactive, ref } from "vue";
   import { z } from "zod";
 
-  import { register } from "../api/auth";
+  import { initSession, register } from "../api/auth";
   import { RegistrationValidationException } from "../exceptions";
   import { key } from "../providers/ExceptionHandlerProvider.vue";
   import type { RegistrationValidationError } from "../types";
@@ -42,6 +42,7 @@
   const onSubmit = async (event: FormSubmitEvent<RegistrationSchema>) => {
     try {
       loading.value = true;
+      await initSession();
       await register(event.data);
       showSuccess();
       resetForm();

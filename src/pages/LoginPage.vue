@@ -3,7 +3,7 @@
   import { inject, reactive, ref } from "vue";
   import { z } from "zod";
 
-  import { getUser, login } from "../api/auth";
+  import { getUser, initSession, login } from "../api/auth";
   import {
     InvalidLoginException,
     LoginValidationException,
@@ -42,6 +42,7 @@
   const onSubmit = async (event: FormSubmitEvent<LoginSchema>) => {
     try {
       loading.value = true;
+      await initSession();
       await login(event.data);
       userStore.user = await getUser();
       showSuccess();

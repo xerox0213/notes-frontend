@@ -30,8 +30,6 @@ export const getUser = async (): Promise<User> => {
 };
 
 export const register = async (credentials: RegistrationSchema) => {
-  await initSession();
-
   const res = await fetch(
     `${API_URL}/api/register`,
     options("POST", credentials),
@@ -50,8 +48,6 @@ export const register = async (credentials: RegistrationSchema) => {
 };
 
 export const login = async (credentials: LoginSchema) => {
-  await initSession();
-
   const res = await fetch(`${API_URL}/api/login`, options("POST", credentials));
 
   if (!res.ok) {
