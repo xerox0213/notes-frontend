@@ -5,7 +5,7 @@ import {
   RegistrationValidationException,
 } from "../exceptions";
 import * as utils from "../utils";
-import { register } from "./auth";
+import { login, register } from "./auth";
 
 const options = {};
 const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
@@ -68,6 +68,29 @@ describe("register", () => {
     await expect(register(credentials)).rejects.toBeInstanceOf(
       RegistrationValidationException,
     );
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+});
+
+describe("login", () => {
+  const credentials = {
+    email: "damon.salvatore@gmail.com",
+    password: "iloveyouelena",
+  };
+
+  const endpoint = `${utils.API_URL}/api/login`;
+
+  it("should login", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        status: 204,
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await login(credentials);
+
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
