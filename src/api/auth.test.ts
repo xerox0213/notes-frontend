@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   CsrfMismatchException,
   InvalidLoginException,
+  LoginValidationException,
   RegistrationValidationException,
 } from "../exceptions";
 import * as utils from "../utils";
@@ -126,6 +127,23 @@ describe("login", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(login(credentials)).rejects.instanceOf(CsrfMismatchException);
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+
+  it("should throw login validation excpetion", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 422,
+        json: () => Promise.resolve(),
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(login(credentials)).rejects.instanceOf(
+      LoginValidationException,
+    );
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
