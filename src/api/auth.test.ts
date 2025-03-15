@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   CsrfMismatchException,
+  InvalidLoginException,
   RegistrationValidationException,
 } from "../exceptions";
 import * as utils from "../utils";
@@ -26,6 +27,7 @@ describe("register", () => {
   it("should register", async () => {
     const fetchMock = vi.fn(() =>
       Promise.resolve({
+        ok: true,
         status: 204,
       }),
     );
@@ -41,6 +43,7 @@ describe("register", () => {
   it("should throw csrf mismatch exception", async () => {
     const fetchMock = vi.fn(() =>
       Promise.resolve({
+        ok: false,
         status: 419,
         json: () => Promise.resolve(),
       }),
@@ -58,6 +61,7 @@ describe("register", () => {
   it("should throw registration validation exception", async () => {
     const fetchMock = vi.fn(() =>
       Promise.resolve({
+        ok: false,
         status: 422,
         json: () => Promise.resolve(),
       }),
@@ -84,6 +88,7 @@ describe("login", () => {
   it("should login", async () => {
     const fetchMock = vi.fn(() =>
       Promise.resolve({
+        ok: true,
         status: 204,
       }),
     );
