@@ -5,6 +5,7 @@ import {
   InvalidLoginException,
   LoginValidationException,
   RegistrationValidationException,
+  UnauthenticatedException,
 } from "../exceptions";
 import * as utils from "../utils";
 import { getUser, login, register } from "./auth";
@@ -193,5 +194,21 @@ describe("get user", () => {
     expect(optionsSpy).toHaveBeenCalledWith("GET");
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
     expect(userFetched).toBe(user);
+  });
+
+  it("should throw unauthenticated exception", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        json: () => Promise.resolve(),
+      }),
+    );
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(getUser()).rejects.toBeInstanceOf(UnauthenticatedException);
+    expect(optionsSpy).toHaveBeenCalledWith("GET");
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
 });
