@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   CsrfMismatchException,
@@ -9,6 +9,10 @@ import { register } from "./auth";
 
 const options = {};
 const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
+
+afterEach(() => {
+  optionsSpy.mockClear();
+});
 
 describe("register", () => {
   const credentials = {
