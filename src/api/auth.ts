@@ -21,8 +21,6 @@ export const getUser = async (): Promise<User> => {
     switch (res.status) {
       case 401:
         return Promise.reject(new UnauthenticatedException(await res.json()));
-      case 419:
-        return Promise.reject(new CsrfMismatchException(await res.json()));
     }
   }
 
