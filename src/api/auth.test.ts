@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 
+import { CsrfMismatchException } from "../exceptions";
 import * as utils from "../utils";
 import { register } from "./auth";
 
 const options = {};
 const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
-
 
 describe("register", () => {
   const credentials = {
@@ -27,6 +27,23 @@ describe("register", () => {
 
     await register(credentials);
 
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+
+  it("should throw csrf mismatch exception", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        status: 419,
+        json: () => Promise.resolve(),
+      }),
+    );
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(register(credentials)).rejects.instanceOf(
+      CsrfMismatchException,
+    );
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
