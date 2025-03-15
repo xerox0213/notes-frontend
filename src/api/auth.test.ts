@@ -99,4 +99,19 @@ describe("login", () => {
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
+
+  it("should throw invalid login exception", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 401,
+        json: () => Promise.resolve(),
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(login(credentials)).rejects.instanceOf(InvalidLoginException);
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
 });
