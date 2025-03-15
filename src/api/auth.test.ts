@@ -114,4 +114,19 @@ describe("login", () => {
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
+
+  it("should throw csrf mismatch exception", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 419,
+        json: () => Promise.resolve(),
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(login(credentials)).rejects.instanceOf(CsrfMismatchException);
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
 });
