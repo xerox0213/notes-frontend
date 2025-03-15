@@ -7,7 +7,7 @@ import {
   RegistrationValidationException,
 } from "../exceptions";
 import * as utils from "../utils";
-import { login, register } from "./auth";
+import { getUser, login, register } from "./auth";
 
 const options = {};
 const optionsSpy = vi.spyOn(utils, "options").mockReturnValue(options);
@@ -165,5 +165,33 @@ describe("login", () => {
     await expect(login(credentials)).rejects.instanceOf(TypeError);
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+});
+
+describe("get user", () => {
+  const user = {
+    first_name: "Damon",
+    last_name: "Salvatore",
+    email: "damon.salvatore@gmail.com",
+  };
+
+  const endpoint = `${utils.API_URL}/api/user`;
+
+  it("should return the user", async () => {
+    const fetchMock = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve(user),
+      }),
+    );
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    const userFetched = await getUser();
+
+    expect(optionsSpy).toHaveBeenCalledWith("GET");
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+    expect(userFetched).toBe(user);
   });
 });
