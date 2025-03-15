@@ -9,7 +9,7 @@ export interface User {
 
 export type BasicError = { message: string };
 
-export type RegistrationError = BasicError & {
+export type RegistrationValidationError = BasicError & {
   errors: Partial<{
     [K in keyof RegistrationSchema]: string[];
   }>;

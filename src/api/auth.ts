@@ -2,7 +2,7 @@ import {
   CsrfMismatchException,
   InvalidLoginException,
   LoginValidationException,
-  RegistrationException,
+  RegistrationValidationException,
   UnauthenticatedException,
 } from "../exceptions";
 import type { LoginSchema } from "../pages/LoginPage.vue";
@@ -42,7 +42,9 @@ export const register = async (credentials: RegistrationSchema) => {
       case 419:
         return Promise.reject(new CsrfMismatchException(await res.json()));
       case 422:
-        return Promise.reject(new RegistrationException(await res.json()));
+        return Promise.reject(
+          new RegistrationValidationException(await res.json()),
+        );
     }
   }
 };

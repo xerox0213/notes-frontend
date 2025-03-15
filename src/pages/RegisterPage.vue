@@ -4,9 +4,9 @@
   import { z } from "zod";
 
   import { register } from "../api/auth";
-  import { RegistrationException } from "../exceptions";
+  import { RegistrationValidationException } from "../exceptions";
   import { key } from "../providers/ExceptionHandlerProvider.vue";
-  import type { RegistrationError } from "../types";
+  import type { RegistrationValidationError } from "../types";
 
   const schema = z.object({
     first_name: z.string().min(3, "Must be at least 3 characters"),
@@ -32,7 +32,7 @@
     password: undefined,
   });
 
-  const apiErrors = ref<Required<RegistrationError["errors"]>>({
+  const apiErrors = ref<Required<RegistrationValidationError["errors"]>>({
     first_name: [],
     last_name: [],
     email: [],
@@ -46,7 +46,7 @@
       showSuccess();
       resetForm();
     } catch (exception) {
-      if (exception instanceof RegistrationException) {
+      if (exception instanceof RegistrationValidationException) {
         setApiErrors(exception.reason.errors);
       } else {
         handleException(exception);
@@ -71,9 +71,9 @@
     form.password = "";
   };
 
-  const setApiErrors = (errors: RegistrationError["errors"]) => {
+  const setApiErrors = (errors: RegistrationValidationError["errors"]) => {
     for (const key in errors) {
-      const field = key as keyof RegistrationError["errors"];
+      const field = key as keyof RegistrationValidationError["errors"];
       apiErrors.value[field] = errors[field] as string[];
     }
   };

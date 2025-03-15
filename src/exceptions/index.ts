@@ -1,7 +1,7 @@
 import type {
   BasicError,
   LoginValidationError,
-  RegistrationError,
+  RegistrationValidationError,
 } from "../types";
 
 export class CsrfMismatchException {
@@ -12,10 +12,10 @@ export class CsrfMismatchException {
   }
 }
 
-export class RegistrationException {
-  reason: RegistrationError;
+export class RegistrationValidationException {
+  reason: RegistrationValidationError;
 
-  constructor(errors: RegistrationError) {
+  constructor(errors: RegistrationValidationError) {
     this.reason = errors;
   }
 }
