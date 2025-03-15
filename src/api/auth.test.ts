@@ -76,6 +76,15 @@ describe("register", () => {
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
+
+  it("should throw type error exception", async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new TypeError());
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(register(credentials)).rejects.instanceOf(TypeError);
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
 });
 
 describe("login", () => {
@@ -144,6 +153,15 @@ describe("login", () => {
     await expect(login(credentials)).rejects.instanceOf(
       LoginValidationException,
     );
+    expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
+    expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
+  });
+
+  it("should throw type error exception", async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new TypeError());
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(login(credentials)).rejects.instanceOf(TypeError);
     expect(optionsSpy).toHaveBeenCalledWith("POST", credentials);
     expect(fetchMock).toHaveBeenCalledWith(endpoint, options);
   });
